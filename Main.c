@@ -124,42 +124,59 @@ int main() {
     int n2 = sizeof(arr2) / sizeof(arr2[0]);
     
     // ARRAY DO MergeSort
-
+    
+    printf("\n\t<======================================>\n");
     printf("Array desordenado de 1000 elementos:\n");
     imprimirArray(arr, n);
 
     clock_t start, end;
     double cpu_time_used;
 
+    // Medir tempo e memória do MergeSort
+    
     start = clock();
     mergeSort(arr, 0, n - 1);
     end = clock();
     
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    
+    printf("\n\t<======================================>\n");
     printf("\nArray ordenado com mergeSort:\n");
     imprimirArray(arr, n);
     
-    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-    printf("\nTempo de execução: %f segundos\n", cpu_time_used);
+    printf("\n\t<======================================>\n");
+    
+    printf("\nTempo de execução do MergeSort: %f segundos\n", cpu_time_used);
     printf("Número de comparações (MergeSort): %lu\n", comparisons);
     printf("Número de trocas (MergeSort): %lu\n", swaps);
     
-    // ARRAY DO quickSort 
+    size_t memory_mergeSort = n * sizeof(int);
+    printf("Memória utilizada pelo MergeSort: %zu bytes\n", memory_mergeSort);
+
+    // Medir tempo e memória do QuickSort
     
+    printf("\n\t<======================================>\n");
     printf("\nArray desordenado de 100 elementos:\n");
     imprimirArray(arr2, n2);
     
     start = clock();
     quickSort(arr2, 0, n2 - 1);
     end = clock();
-
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    
+    printf("\n\t<======================================>\n");
     printf("\nArray ordenado com quickSort:\n");
     imprimirArray(arr2, n2);
-
+    
+    printf("\n\t<======================================>\n");
+    
+    printf("\nTempo de execução do QuickSort: %f segundos\n", cpu_time_used);
     printf("Número de comparações (QuickSort): %lu\n", comparisons_qs);
     printf("Número de trocas (QuickSort): %lu\n", swaps_qs);
-
-    size_t total_memory = sizeof(arr) + sizeof(arr2);
-    printf("Memória utilizada: %zu bytes\n", total_memory);
+    
+    size_t memory_quickSort = n2 * sizeof(int);
+    printf("Memória utilizada pelo QuickSort: %zu bytes\n", memory_quickSort);
 
     return 0;
 }
