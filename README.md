@@ -9,7 +9,7 @@
 
 ### OBJETIVOS GERAIS
 
-[ENUNCIADO](https://github.com/DebbieMatt/Trabalgo-AED2/blob/366d513adda6a7f7c0ccb7842658d44b7f50aa63/Enunciado.pdf).
+[ENUNCIADO](https://github.com/DebbieMatt/Trabalho_A3_ALG_II/blob/a463b0b6e27f0ebf09d41fce9d99f9f90f8515b0/TrabalhoA3%20Controle%20e%20Automa%C3%A7%C3%A3o.pdf).
 
 ## 💻 Pré-requisitos
 
@@ -18,7 +18,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 - Você instalou a versão mais recente de `GCC` ou rodar em compilador online, como: <a href= "https://www.onlinegdb.com/online_c++_compiler" > OnlineGDB </a>
   
 - Você tem uma máquina `Windows / Linux / Mac`.
-- Você leu [Especificações](https://github.com/DebbieMatt/Trabalgo-AED2/blob/366d513adda6a7f7c0ccb7842658d44b7f50aa63/Enunciado.pdf).
+- Você leu [Especificações](https://github.com/DebbieMatt/Trabalho_A3_ALG_II/blob/a463b0b6e27f0ebf09d41fce9d99f9f90f8515b0/TrabalhoA3%20Controle%20e%20Automa%C3%A7%C3%A3o.pdf).
 
 ## 🚀 Instalando o Trabalho Final
 
