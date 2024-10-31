@@ -5,7 +5,6 @@
 unsigned long comparisons = 0;
 unsigned long swaps = 0;
 
-
 void bubbleSort(int arr[], int n) {
     for (int i = 0; i < n-1; i++) {
         for (int j = 0; j < n-i-1; j++) {
@@ -19,6 +18,41 @@ void bubbleSort(int arr[], int n) {
         }
     }
 } // PRONTO BUBBLE
+
+void selectionSort(int arr[], int n) {
+    int i, j, min_idx;
+
+    for (i = 0; i < n-1; i++) {
+        min_idx = i;
+        for (j = i+1; j < n; j++) {
+            comparisons++;
+            if (arr[j] < arr[min_idx]) {
+                min_idx = j;
+            }
+        }
+        if (min_idx != i) {
+            int temp = arr[min_idx];
+            arr[min_idx] = arr[i];
+            arr[i] = temp;
+            swaps++;
+        }
+    }
+} // PRONTO SELECTION
+
+void insertionSort(int arr[], int n) {
+    int i, key, j;
+    for (i = 1; i < n; i++) {
+        key = arr[i];
+        j = i - 1;
+        comparisons++;
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];
+            j = j - 1;
+            swaps++;
+        }
+        arr[j + 1] = key;
+    }
+} // PRONTO INSERTION
 
 void merge(int arr[], int l, int m, int r) {
     int n1 = m - l + 1;
@@ -111,18 +145,46 @@ void heapSort(int arr[], int n) {
     }
 } // PRONTO HEAP
 
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+    for (int j = low; j <= high - 1; j++) {
+        comparisons++;
+        if (arr[j] < pivot) {
+            i++;
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            swaps++;
+        }
+    }
+    int temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+    swaps++;
+    return (i + 1);
+} // PRONTO QUICK
+
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+} // PRONTO QUICK
+
 void imprimirArray(int arr[], int tamanho) {
     for (int i = 0; i < tamanho; i++) {
         printf("%d ", arr[i]);
     }
     printf("\n");
-} // PRONTO 
+} // IMPRESSÃO
 
 int main() {
     
-    int arr1[100]; // Base 1: 100 elementos aleatórios
-    int arr2[1000]; // Base 2: 1000 elementos em ordem decrescente
-    int arr3[10000]; // Base 3: 10.000 elementos com 50% ordenados
+    int *arr1 = (int *)malloc(100 * sizeof(int)); // Base 1: 100 elementos aleatórios 
+    int *arr2 = (int *)malloc(1000 * sizeof(int)); // Base 2: 1000 elementos em ordem decrescente 
+    int *arr3 = (int *)malloc(10000 * sizeof(int)); // Base 3: 10.000 elementos com 50% ordenados
 
     srand(time(NULL));
     for (int i = 0; i < 100; i++) {
@@ -138,9 +200,7 @@ int main() {
         arr3[i] = i;
     }
 
-    int n1 = sizeof(arr1) / sizeof(arr1[0]);
-    int n2 = sizeof(arr2) / sizeof(arr2[0]);
-    int n3 = sizeof(arr3) / sizeof(arr3[0]);
+    int n1 = 100, n2 = 1000, n3 = 10000;
 
     clock_t start, end;
     double cpu_time_used;
@@ -180,6 +240,8 @@ int main() {
     printf("Tempo de execução: %f segundos\n", cpu_time_used);
     printf("Número de comparações: %lu\n", comparisons);
     printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
 
     // Testando Bubble Sort com Base 3
     printf("\nBase 3: Array desordenado de 10.000 elementos:\n");
@@ -196,6 +258,120 @@ int main() {
     printf("Tempo de execução: %f segundos\n", cpu_time_used);
     printf("Número de comparações: %lu\n", comparisons);
     printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+    
+    // <------------------- InsertionSort ------------------->
+    
+    // Testando Selection Sort com Base 1
+    printf("\nBase 1: Array desordenado de 100 elementos:\n");
+    //imprimirArray(arr1, n1);
+    
+    start = clock();
+    selectionSort(arr1, n1);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Selection Sort:\n");
+    //imprimirArray(arr1, n1);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+
+    // Testando Selection Sort com Base 2
+    printf("\nBase 2: Array desordenado de 1000 elementos:\n");
+    //imprimirArray(arr2, n2);
+    
+    start = clock();
+    selectionSort(arr2, n2);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Selection Sort:\n");
+    //imprimirArray(arr2, n2);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+
+    // Testando Selection Sort com Base 3
+    printf("\nBase 3: Array desordenado de 10.000 elementos:\n");
+    //imprimirArray(arr3, n3);
+    
+    start = clock();
+    selectionSort(arr3, n3);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Selection Sort:\n");
+    //imprimirArray(arr3, n3);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+    
+    // <------------------- InsertionSort ------------------->
+    
+    // Testando Insertion Sort com Base 1
+    printf("\nBase 1: Array desordenado de 100 elementos:\n");
+    //imprimirArray(arr1, n1);
+    
+    start = clock();
+    insertionSort(arr1, n1);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Insertion Sort:\n");
+    //imprimirArray(arr1, n1);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+
+    // Testando Insertion Sort com Base 2
+    printf("\nBase 2: Array desordenado de 1000 elementos:\n");
+    //imprimirArray(arr2, n2);
+    
+    start = clock();
+    insertionSort(arr2, n2);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Insertion Sort:\n");
+    //imprimirArray(arr2, n2);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+
+    // Testando Insertion Sort com Base 3
+    printf("\nBase 3: Array desordenado de 10.000 elementos:\n");
+    //imprimirArray(arr3, n3);
+    
+    start = clock();
+    insertionSort(arr3, n3);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Insertion Sort:\n");
+    //imprimirArray(arr3, n3);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
     
     // <------------------- MergeSort ------------------->
     
@@ -250,6 +426,8 @@ int main() {
     printf("Tempo de execução: %f segundos\n", cpu_time_used);
     printf("Número de comparações: %lu\n", comparisons);
     printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
 
     // <------------------- HeapSort ------------------->
     
@@ -268,7 +446,8 @@ int main() {
     printf("Tempo de execução: %f segundos\n", cpu_time_used);
     printf("Número de comparações: %lu\n", comparisons);
     printf("Número de trocas: %lu\n", swaps);
-    
+    comparisons = 0;
+    swaps = 0;
 
     // Testando Heap Sort com Base 2
     printf("\nBase 2: Array desordenado de 1000 elementos:\n");
@@ -285,6 +464,8 @@ int main() {
     printf("Tempo de execução: %f segundos\n", cpu_time_used);
     printf("Número de comparações: %lu\n", comparisons);
     printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
 
     // Testando Heap Sort com Base 3
     printf("\nBase 3: Array desordenado de 10.000 elementos:\n");
@@ -301,6 +482,64 @@ int main() {
     printf("Tempo de execução: %f segundos\n", cpu_time_used);
     printf("Número de comparações: %lu\n", comparisons);
     printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+    
+     // <------------------- QuickSort ------------------->
+    
+    // Testando Quick Sort com Base 1
+    printf("\nBase 1: Array desordenado de 100 elementos:\n");
+    //imprimirArray(arr1, n1);
+    
+    start = clock();
+    quickSort(arr1, 0, n1 - 1);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Quick Sort:\n");
+    //imprimirArray(arr1, n1);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
 
+    // Testando Quick Sort com Base 2
+    printf("\nBase 2: Array desordenado de 1000 elementos:\n");
+    //imprimirArray(arr2, n2);
+    
+    start = clock();
+    quickSort(arr2, 0, n2 - 1);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Quick Sort:\n");
+    //imprimirArray(arr2, n2);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+
+    // Testando Quick Sort com Base 3
+    printf("\nBase 3: Array desordenado de 10.000 elementos:\n");
+    //imprimirArray(arr3, n3);
+    
+    start = clock();
+    quickSort(arr3, 0, n3 - 1);
+    end = clock();
+    
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    printf("Array ordenado com Quick Sort:\n");
+    //imprimirArray(arr3, n3);
+    
+    printf("Tempo de execução: %f segundos\n", cpu_time_used);
+    printf("Número de comparações: %lu\n", comparisons);
+    printf("Número de trocas: %lu\n", swaps);
+    comparisons = 0;
+    swaps = 0;
+    
     return 0;
 }
